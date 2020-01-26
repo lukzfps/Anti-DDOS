@@ -271,36 +271,39 @@ $IPTABLES -A SYN_FLOOD -j DROP
 # Drop any traffic from IANA-reserved IPs.
 #------------------------------------------------------------------------------
 
-$IPTABLES -A INPUT -s 0.0.0.0/7 -j DROP
-$IPTABLES -A INPUT -s 2.0.0.0/8 -j DROP
-$IPTABLES -A INPUT -s 5.0.0.0/8 -j DROP
-$IPTABLES -A INPUT -s 7.0.0.0/8 -j DROP
-$IPTABLES -A INPUT -s 10.0.0.0/8 -j DROP
-$IPTABLES -A INPUT -s 23.0.0.0/8 -j DROP
-$IPTABLES -A INPUT -s 27.0.0.0/8 -j DROP
-$IPTABLES -A INPUT -s 31.0.0.0/8 -j DROP
-$IPTABLES -A INPUT -s 36.0.0.0/7 -j DROP
-$IPTABLES -A INPUT -s 39.0.0.0/8 -j DROP
-$IPTABLES -A INPUT -s 42.0.0.0/8 -j DROP
-$IPTABLES -A INPUT -s 49.0.0.0/8 -j DROP
-$IPTABLES -A INPUT -s 50.0.0.0/8 -j DROP
-$IPTABLES -A INPUT -s 77.0.0.0/8 -j DROP
-$IPTABLES -A INPUT -s 78.0.0.0/7 -j DROP
-$IPTABLES -A INPUT -s 92.0.0.0/6 -j DROP
-$IPTABLES -A INPUT -s 96.0.0.0/4 -j DROP
-$IPTABLES -A INPUT -s 112.0.0.0/5 -j DROP
-$IPTABLES -A INPUT -s 120.0.0.0/8 -j DROP
-$IPTABLES -A INPUT -s 169.254.0.0/16 -j DROP
-$IPTABLES -A INPUT -s 172.16.0.0/12 -j DROP
-$IPTABLES -A INPUT -s 173.0.0.0/8 -j DROP
-$IPTABLES -A INPUT -s 174.0.0.0/7 -j DROP
-$IPTABLES -A INPUT -s 176.0.0.0/5 -j DROP
-$IPTABLES -A INPUT -s 184.0.0.0/6 -j DROP
-$IPTABLES -A INPUT -s 192.0.2.0/24 -j DROP
-$IPTABLES -A INPUT -s 197.0.0.0/8 -j DROP
-$IPTABLES -A INPUT -s 198.18.0.0/15 -j DROP
-$IPTABLES -A INPUT -s 223.0.0.0/8 -j DROP
-$IPTABLES -A INPUT -s 224.0.0.0/3 -j DROP
+# MEDO
+# $IPTABLES -A INPUT -s 0.0.0.0/7 -j DROP
+# $IPTABLES -A INPUT -s 2.0.0.0/8 -j DROP
+# $IPTABLES -A INPUT -s 5.0.0.0/8 -j DROP
+# $IPTABLES -A INPUT -s 7.0.0.0/8 -j DROP
+# $IPTABLES -A INPUT -s 10.0.0.0/8 -j DROP
+# $IPTABLES -A INPUT -s 23.0.0.0/8 -j DROP
+# $IPTABLES -A INPUT -s 27.0.0.0/8 -j DROP
+# $IPTABLES -A INPUT -s 31.0.0.0/8 -j DROP
+# $IPTABLES -A INPUT -s 36.0.0.0/7 -j DROP
+# $IPTABLES -A INPUT -s 39.0.0.0/8 -j DROP
+# $IPTABLES -A INPUT -s 42.0.0.0/8 -j DROP
+# $IPTABLES -A INPUT -s 49.0.0.0/8 -j DROP
+# $IPTABLES -A INPUT -s 50.0.0.0/8 -j DROP
+# $IPTABLES -A INPUT -s 77.0.0.0/8 -j DROP
+# $IPTABLES -A INPUT -s 78.0.0.0/7 -j DROP
+# $IPTABLES -A INPUT -s 92.0.0.0/6 -j DROP
+# $IPTABLES -A INPUT -s 96.0.0.0/4 -j DROP
+# $IPTABLES -A INPUT -s 112.0.0.0/5 -j DROP
+# $IPTABLES -A INPUT -s 120.0.0.0/8 -j DROP
+# $IPTABLES -A INPUT -s 169.254.0.0/16 -j DROP
+# $IPTABLES -A INPUT -s 172.16.0.0/12 -j DROP
+# $IPTABLES -A INPUT -s 173.0.0.0/8 -j DROP
+# $IPTABLES -A INPUT -s 174.0.0.0/7 -j DROP
+# $IPTABLES -A INPUT -s 176.0.0.0/5 -j DROP
+# $IPTABLES -A INPUT -s 184.0.0.0/6 -j DROP
+# $IPTABLES -A INPUT -s 192.0.2.0/24 -j DROP
+# $IPTABLES -A INPUT -s 197.0.0.0/8 -j DROP
+# $IPTABLES -A INPUT -s 198.18.0.0/15 -j DROP
+# $IPTABLES -A INPUT -s 223.0.0.0/8 -j DROP
+# $IPTABLES -A INPUT -s 224.0.0.0/3 -j DROP
+
+
 
 # Selectively allow certain outbound connections, block the rest.
 #------------------------------------------------------------------------------
@@ -309,26 +312,41 @@ $IPTABLES -A INPUT -s 224.0.0.0/3 -j DROP
 $IPTABLES -A OUTPUT -m state --state NEW -p udp --dport 53 -j ACCEPT
 $IPTABLES -A OUTPUT -m state --state NEW -p tcp --dport 53 -j ACCEPT
 
+# Allow outgoing SSH requests.
+$IPTABLES -A OUTPUT -m state --state NEW -p tcp --dport 22 -j ACCEPT
+$IPTABLES -A OUTPUT -m state --state NEW -p udp --dport 22 -j ACCEPT
+
+# Allow outgoing FTP requests. Unencrypted, use with care.
+$IPTABLES -A OUTPUT -m state --state NEW -p tcp --dport 21 -j ACCEPT
+$IPTABLES -A OUTPUT -m state --state NEW -p udp --dport 21 -j ACCEPT
+
+# Allow outgoing FIVEM requests. Unencrypted, use with care.
+$IPTABLES -A OUTPUT -m state --state NEW -p tcp --dport 30120 -j ACCEPT
+$IPTABLES -A OUTPUT -m state --state NEW -p udp --dport 30120 -j ACCEPT
+
+# Allow outgoing FIVEM requests. Unencrypted, use with care.
+$IPTABLES -A OUTPUT -m state --state NEW -p tcp --dport 30110 -j ACCEPT
+$IPTABLES -A OUTPUT -m state --state NEW -p udp --dport 30110 -j ACCEPT
+
+# Allow outgoing MySQL requests. Unencrypted, use with care.
+$IPTABLES -A OUTPUT -m state --state NEW -p tcp --dport 3306 -j ACCEPT
+$IPTABLES -A OUTPUT -m state --state NEW -p udp --dport 3306 -j ACCEPT
+
 # Allow outgoing HTTP requests. Unencrypted, use with care.
-$IPTABLES -A OUTPUT -m state --state NEW -p tcp --dport 80 -j ACCEPT
+# $IPTABLES -A OUTPUT -m state --state NEW -p tcp --dport 80 -j ACCEPT
 
 # Allow outgoing HTTPS requests.
 $IPTABLES -A OUTPUT -m state --state NEW -p tcp --dport 443 -j ACCEPT
+$IPTABLES -A OUTPUT -m state --state NEW -p udp --dport 443 -j ACCEPT
 
 # Allow outgoing SMTPS requests. Do NOT allow unencrypted SMTP!
 # $IPTABLES -A OUTPUT -m state --state NEW -p tcp --dport 465 -j ACCEPT
 
-# Allow outgoing "submission" (RFC 2476) requests.
-$IPTABLES -A OUTPUT -m state --state NEW -p tcp --dport 587 -j ACCEPT
+# Allow outgoing "submission" (RFC 2476) requests. SMTP
+# $IPTABLES -A OUTPUT -m state --state NEW -p tcp --dport 587 -j ACCEPT
 
 # Allow outgoing POP3S requests.
-$IPTABLES -A OUTPUT -m state --state NEW -p tcp --dport 995 -j ACCEPT
-
-# Allow outgoing SSH requests.
-$IPTABLES -A OUTPUT -m state --state NEW -p tcp --dport 22 -j ACCEPT
-
-# Allow outgoing FTP requests. Unencrypted, use with care.
-$IPTABLES -A OUTPUT -m state --state NEW -p tcp --dport 21 -j ACCEPT
+# $IPTABLES -A OUTPUT -m state --state NEW -p tcp --dport 995 -j ACCEPT
 
 # Allow outgoing NNTP requests. Unencrypted, use with care.
 # $IPTABLES -A OUTPUT -m state --state NEW -p tcp --dport 119 -j ACCEPT
@@ -352,9 +370,6 @@ $IPTABLES -A OUTPUT -m state --state NEW -p udp --sport 67:68 --dport 67:68 -j A
 # Allow outgoing CVS requests. Unencrypted, use with care.
 # $IPTABLES -A OUTPUT -m state --state NEW -p tcp --dport 2401 -j ACCEPT
 
-# Allow outgoing MySQL requests. Unencrypted, use with care.
-# $IPTABLES -A OUTPUT -m state --state NEW -p tcp --dport 3306 -j ACCEPT
-
 # Allow outgoing SVN requests. Unencrypted, use with care.
 # $IPTABLES -A OUTPUT -m state --state NEW -p tcp --dport 3690 -j ACCEPT
 
@@ -371,7 +386,7 @@ $IPTABLES -A OUTPUT -m state --state NEW -p udp --sport 67:68 --dport 67:68 -j A
 # $IPTABLES -A OUTPUT -m state --state NEW -p tcp --dport 9091 -j ACCEPT
 
 # Allow outgoing OpenVPN requests.
-$IPTABLES -A OUTPUT -m state --state NEW -p udp --dport 1194 -j ACCEPT
+# $IPTABLES -A OUTPUT -m state --state NEW -p udp --dport 1194 -j ACCEPT
 
 # TODO: ICQ, MSN, GTalk, Skype, Yahoo, etc...
 
@@ -382,35 +397,47 @@ $IPTABLES -A OUTPUT -m state --state NEW -p udp --dport 1194 -j ACCEPT
 $IPTABLES -A INPUT -m state --state NEW -p udp --dport 53 -j ACCEPT
 $IPTABLES -A INPUT -m state --state NEW -p tcp --dport 53 -j ACCEPT
 
-# Allow incoming HTTP requests.
-$IPTABLES -A INPUT -m state --state NEW -p tcp --dport 80 -j ACCEPT
-
-# Allow incoming HTTPS requests.
-$IPTABLES -A INPUT -m state --state NEW -p tcp --dport 443 -j ACCEPT
-
-# Allow incoming POP3 requests.
-$IPTABLES -A INPUT -m state --state NEW -p tcp --dport 110 -j ACCEPT
-
-# Allow incoming IMAP4 requests.
-$IPTABLES -A INPUT -m state --state NEW -p tcp --dport 143 -j ACCEPT
-
-# Allow incoming POP3S requests.
-$IPTABLES -A INPUT -m state --state NEW -p tcp --dport 995 -j ACCEPT
-
-# Allow incoming SMTP requests.
-$IPTABLES -A INPUT -m state --state NEW -p tcp --dport 25 -j ACCEPT
-
 # Allow incoming SSH requests.
 $IPTABLES -A INPUT -m state --state NEW -p tcp --dport 22 -j ACCEPT
+$IPTABLES -A INPUT -m state --state NEW -p udp --dport 22 -j ACCEPT
 
 # Allow incoming FTP requests.
 $IPTABLES -A INPUT -m state --state NEW -p tcp --dport 21 -j ACCEPT
+$IPTABLES -A INPUT -m state --state NEW -p udp --dport 21 -j ACCEPT
+
+# Allow incoming FIVEM requests.
+$IPTABLES -A INPUT -m state --state NEW -p tcp --dport 30120 -j ACCEPT
+$IPTABLES -A INPUT -m state --state NEW -p udp --dport 30120 -j ACCEPT
+
+# Allow incoming FIVEM requests.
+$IPTABLES -A INPUT -m state --state NEW -p tcp --dport 30110 -j ACCEPT
+$IPTABLES -A INPUT -m state --state NEW -p udp --dport 30110 -j ACCEPT
+
+# Allow incoming MySQL requests.
+$IPTABLES -A INPUT -m state --state NEW -p tcp --dport 3306 -j ACCEPT
+$IPTABLES -A INPUT -m state --state NEW -p udp --dport 3306 -j ACCEPT
+
+# Allow incoming HTTP requests.
+# $IPTABLES -A INPUT -m state --state NEW -p tcp --dport 80 -j ACCEPT
+
+# Allow incoming HTTPS requests.
+$IPTABLES -A INPUT -m state --state NEW -p tcp --dport 443 -j ACCEPT
+$IPTABLES -A INPUT -m state --state NEW -p udp --dport 443 -j ACCEPT
+
+# Allow incoming POP3 requests.
+# $IPTABLES -A INPUT -m state --state NEW -p tcp --dport 110 -j ACCEPT
+
+# Allow incoming IMAP4 requests.
+# $IPTABLES -A INPUT -m state --state NEW -p tcp --dport 143 -j ACCEPT
+
+# Allow incoming POP3S requests.
+# $IPTABLES -A INPUT -m state --state NEW -p tcp --dport 995 -j ACCEPT
+
+# Allow incoming SMTP requests.
+# $IPTABLES -A INPUT -m state --state NEW -p tcp --dport 25 -j ACCEPT
 
 # Allow incoming NNTP requests.
 # $IPTABLES -A INPUT -m state --state NEW -p tcp --dport 119 -j ACCEPT
-
-# Allow incoming MySQL requests.
-# $IPTABLES -A INPUT -m state --state NEW -p tcp --dport 3306 -j ACCEPT
 
 # Allow incoming PLESK requests.
 # $IPTABLES -A INPUT -m state --state NEW -p tcp --dport 8843 -j ACCEPT
