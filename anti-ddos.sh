@@ -76,7 +76,7 @@ for i in /proc/sys/net/ipv4/conf/*/send_redirects; do echo 0 > $i; done
 for i in /proc/sys/net/ipv4/conf/*/accept_source_route; do echo 0 > $i; done
 
 # Disable multicast routing
-for i in /proc/sys/net/ipv4/conf/*/mc_forwarding; do echo 0 > $i; done
+#for i in /proc/sys/net/ipv4/conf/*/mc_forwarding; do echo 0 > $i; done
 
 # Disable proxy_arp.
 for i in /proc/sys/net/ipv4/conf/*/proxy_arp; do echo 0 > $i; done
@@ -476,18 +476,18 @@ $IPTABLES -A FORWARD -j REJECTLOG
 
 # Appending rules : Let’s add some more IPv6 rules to our firewall.
 
-sudo ip6tables -A INPUT -p tcp --dport ssh -s HOST_IPV6_IP -j ACCEPT
-sudo ip6tables -A INPUT -p tcp --dport 80 -j ACCEPT
-sudo ip6tables -A INPUT -p tcp --dport 21 -j ACCEPT
-sudo ip6tables -A INPUT -p tcp --dport 25 -j ACCEPT
+#sudo ip6tables -A INPUT -p tcp --dport ssh -s HOST_IPV6_IP -j ACCEPT
+#sudo ip6tables -A INPUT -p tcp --dport 80 -j ACCEPT
+#sudo ip6tables -A INPUT -p tcp --dport 21 -j ACCEPT
+#sudo ip6tables -A INPUT -p tcp --dport 25 -j ACCEPT
 
 # To see the IPv6 rules with line numbers, type the following command:
 
-sudo ip6tables -L -n --line-numbers
+#sudo ip6tables -L -n --line-numbers
 
 # Deleting rules
 
-sudo ip6tables -D INPUT -p tcp --dport 21 -j ACCEPT
+#sudo ip6tables -D INPUT -p tcp --dport 21 -j ACCEPT
 
 # Exit gracefully.
 #------------------------------------------------------------------------------
