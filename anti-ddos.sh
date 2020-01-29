@@ -343,6 +343,10 @@ $IPTABLES -A OUTPUT -m state --state NEW -p udp --dport 443 -j ACCEPT
 $IPTABLES -A OUTPUT -m state --state NEW -p tcp --dport 3389 -j ACCEPT
 $IPTABLES -A OUTPUT -m state --state NEW -p udp --dport 3389 -j ACCEPT
 
+# Allow outgoing MUMBLE requests.
+$IPTABLES -A OUTPUT -m state --state NEW -p udp --dport 4000 -j ACCEPT
+$IPTABLES -A OUTPUT -m state --state NEW -p tcp --dport 4000 -j ACCEPT
+
 # Allow outgoing SMTPS requests. Do NOT allow unencrypted SMTP!
 # $IPTABLES -A OUTPUT -m state --state NEW -p tcp --dport 465 -j ACCEPT
 
@@ -431,6 +435,10 @@ $IPTABLES -A INPUT -m state --state NEW -p udp --dport 443 -j ACCEPT
 # Allow incoming RDP requests.
 $IPTABLES -A INPUT -m state --state NEW -p tcp --dport 3389 -j ACCEPT
 $IPTABLES -A INPUT -m state --state NEW -p udp --dport 3389 -j ACCEPT
+
+# Allow incoming MUMBLE requests.
+$IPTABLES -A INPUT -m state --state NEW -p udp --dport 4000 -j ACCEPT
+$IPTABLES -A INPUT -m state --state NEW -p tcp --dport 4000 -j ACCEPT
 
 # Allow incoming POP3 requests.
 # $IPTABLES -A INPUT -m state --state NEW -p tcp --dport 110 -j ACCEPT
