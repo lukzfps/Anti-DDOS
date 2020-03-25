@@ -25,7 +25,7 @@ LOG="$LOG --log-ip-options"
 
 # Defaults for rate limiting
 #------------------------------------------------------------------------------
-RLIMIT="-m limit --limit 3/s --limit-burst 8"
+RLIMIT="-m limit --limit 15/s --limit-burst 8"
 
 # Unprivileged ports.
 #------------------------------------------------------------------------------
