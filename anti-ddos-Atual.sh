@@ -323,6 +323,13 @@ $IPTABLES -A OUTPUT -m state --state NEW -p udp --dport 21 -j ACCEPT
 # Allow outgoing FIVEM requests. Unencrypted, use with care.
 $IPTABLES -A OUTPUT -m state --state NEW -p tcp --dport 30120 -j ACCEPT
 $IPTABLES -A OUTPUT -m state --state NEW -p udp --dport 30120 -j ACCEPT
+$IPTABLES -A OUTPUT -m state --state NEW -p tcp --dport 30127 -j ACCEPT
+$IPTABLES -A OUTPUT -m state --state NEW -p udp --dport 30127 -j ACCEPT
+
+$IPTABLES -A OUTPUT -m state --state NEW -p tcp --dport 40120 -j ACCEPT
+$IPTABLES -A OUTPUT -m state --state NEW -p udp --dport 40120 -j ACCEPT
+$IPTABLES -A OUTPUT -m state --state NEW -p tcp --dport 40125 -j ACCEPT
+$IPTABLES -A OUTPUT -m state --state NEW -p udp --dport 40125 -j ACCEPT
 
 # Allow outgoing FIVEM requests. Unencrypted, use with care.
 $IPTABLES -A OUTPUT -m state --state NEW -p tcp --dport 30110 -j ACCEPT
@@ -416,6 +423,13 @@ $IPTABLES -A INPUT -m state --state NEW -p udp --dport 21 -j ACCEPT
 # Allow incoming FIVEM requests.
 $IPTABLES -A INPUT -m state --state NEW -p tcp --dport 30120 -j ACCEPT
 $IPTABLES -A INPUT -m state --state NEW -p udp --dport 30120 -j ACCEPT
+$IPTABLES -A INPUT -m state --state NEW -p tcp --dport 30127 -j ACCEPT
+$IPTABLES -A INPUT -m state --state NEW -p udp --dport 30127 -j ACCEPT
+
+$IPTABLES -A INPUT -m state --state NEW -p tcp --dport 40120 -j ACCEPT
+$IPTABLES -A INPUT -m state --state NEW -p udp --dport 40120 -j ACCEPT
+$IPTABLES -A INPUT -m state --state NEW -p tcp --dport 40125 -j ACCEPT
+$IPTABLES -A INPUT -m state --state NEW -p udp --dport 40125 -j ACCEPT
 
 # Allow incoming FIVEM requests.
 $IPTABLES -A INPUT -m state --state NEW -p tcp --dport 30110 -j ACCEPT
